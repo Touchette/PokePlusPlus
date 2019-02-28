@@ -1,23 +1,29 @@
 #include <SFML/Graphics.hpp>
+#include <iostream>
 
-int main()
-{
-	sf::RenderWindow window(sf::VideoMode(200, 200), "SFML works!");
-	sf::CircleShape shape(100.f);
-	shape.setFillColor(sf::Color::Green);
+int main(int argc, char *argv[]) {
+	sf::RenderWindow window(sf::VideoMode(512, 512), "PokéPlusPlus", sf::Style::Close | sf::Style::Titlebar);
 
-	while (window.isOpen())
-	{
-		sf::Event event;
-		while (window.pollEvent(event))
-		{
-			if (event.type == sf::Event::Closed)
-				window.close();
+	sf::Image icon;
+	if (!icon.loadFromFile("../Sprites/icon.png")) {
+		std::cout << "Could not load file!" << std::endl;
+		return 1;
+	} else { // set the window icon
+		const sf::Uint8 *iconPixels = icon.getPixelsPtr();
+		window.setIcon(12, 12, iconPixels);
+	}
+
+	// Main window loop
+	while (window.isOpen()) {
+		sf::Event evnt;
+
+		while (window.pollEvent(evnt)) {
+			switch (evnt.type) {
+				case sf::Event::Closed: 
+					window.close();
+					break;
+			}
 		}
-
-		window.clear();
-		window.draw(shape);
-		window.display();
 	}
 
 	return 0;
