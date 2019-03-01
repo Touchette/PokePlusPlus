@@ -1,31 +1,45 @@
-#include <SFML/Graphics.hpp>
 #include <iostream>
+#include <SFML/Graphics.hpp>
+#include "Player.h"
 
 int main(int argc, char *argv[]) {
-	sf::RenderWindow window(sf::VideoMode(256, 256), "PokéPlusPlus", sf::Style::Close | sf::Style::Titlebar);
-
-	sf::RectangleShape player(sf::Vector2f(14.0f, 20.0f));
-	sf::Texture MayIdleTexture;
-	sf::Texture MayLeftTexture;
-	sf::Texture MayRightTexture;
-	sf::Texture MayBackTexture;
-	MayIdleTexture.loadFromFile("../Sprites/may-idle-forward.png");
-	MayLeftTexture.loadFromFile("../Sprites/may-idle-left.png");
-	MayRightTexture.loadFromFile("../Sprites/may-idle-right.png");
-	MayBackTexture.loadFromFile("../Sprites/may-idle-back.png");
-	player.setTexture(&MayIdleTexture);
+	// Set up the window
+	int height, width;
+	height = 416; width = 480;
+	sf::RenderWindow window(sf::VideoMode(width, height), "PokéPlusPlus", sf::Style::Close | sf::Style::Titlebar);
 
 	sf::Image icon;
-	if (!icon.loadFromFile("../Sprites/icon.png")) {
+	if (!icon.loadFromFile("Sprites/icon.png")) {
 		std::cout << "Could not load file!" << std::endl;
 		return 1;
-	} else { // set the window icon
+	}
+	else { // set the window icon
 		const sf::Uint8 *iconPixels = icon.getPixelsPtr();
 		window.setIcon(12, 12, iconPixels);
 	}
 
+	// Draw the background
+	sf::RectangleShape background(sf::Vector2f(480.0f, 416.0f));
+	sf::Texture starterTown;
+
+	starterTown.loadFromFile("Sprites/littleroot-town-global.png");
+
+	background.setTexture(&starterTown);
+
+	// 0, 1, 2 in x    : 0 is walk left, 1 is walk straight, 2 is walk right
+	// 0, 1, 2, 3 in y : 0 is forward, 1 is right, 2 is back, 3 is left
+	sf::Texture playerTexture;
+	playerTexture.loadFromFile("Sprites/may-walk-cycles.png");
+
+	Player player(&playerTexture, sf::Vector2u(3, 4), 0.18f, 40.0f);
+
+	float deltaTime = 0.0f;
+	sf::Clock clock;
+
 	// Main window loop
 	while (window.isOpen()) {
+		deltaTime = clock.restart().asSeconds();
+
 		sf::Event evnt;
 
 		while (window.pollEvent(evnt)) {
@@ -33,33 +47,13 @@ int main(int argc, char *argv[]) {
 				case sf::Event::Closed: 
 					window.close();
 					break;
-				case sf::Event::TextEntered:
-					if (evnt.text.unicode < 128) {
-						//printf("%c", evnt.text.unicode);
-					}
-					break;
 			}
 		}
-
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::W)) {
-			player.setTexture(&MayBackTexture);
-			player.move(sf::Vector2f(0, -0.01f));
-		}
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::A)) {
-			player.setTexture(&MayLeftTexture);
-			player.move(sf::Vector2f(-0.01f, 0));
-		}
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::S)) {
-			player.setTexture(&MayIdleTexture);
-			player.move(sf::Vector2f(0, 0.01f));
-		}
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D)) {
-			player.setTexture(&MayRightTexture);
-			player.move(sf::Vector2f(0.01f, 0));
-		}
+		player.Update(deltaTime);
 
 		window.clear();
-		window.draw(player);
+		window.draw(background);
+		player.Draw(window);
 		window.display();
 	}
 
