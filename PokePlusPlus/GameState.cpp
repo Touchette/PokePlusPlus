@@ -25,7 +25,6 @@ void GameState::update(const float &dt) {
 }
 
 void GameState::render(sf::RenderTarget *target) {
-
 	if (!target) {
 		target = this->window;
 	}
@@ -37,6 +36,8 @@ void GameState::endState() {
 }
 
 void GameState::updateInput(const float &dt) {
+	this->checkForQuit();
+
 	// Update the player input
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("MOVE_UP")))) {
 		this->player.move(dt, 0.0f, -1.0f);
@@ -50,13 +51,21 @@ void GameState::updateInput(const float &dt) {
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("MOVE_RIGHT")))) {
 		this->player.move(dt, 1.0f, 0.0f);
 	}
-
-	this->checkForQuit();
 }
 
 void GameState::initKeybinds() {
-	this->keybinds.emplace("MOVE_UP", this->supportedKeys->at("Up"));
-	this->keybinds.emplace("MOVE_DOWN", this->supportedKeys->at("Down"));
-	this->keybinds.emplace("MOVE_LEFT", this->supportedKeys->at("Left"));
-	this->keybinds.emplace("MOVE_RIGHT", this->supportedKeys->at("Right"));
+	std::ifstream keys("Settings/gamestate_keybinds.ini");
+
+	// Initialize the keybindings from a file instead of hard
+	// coding it, just reads them into a dictionary
+	if (keys.is_open()) {
+		std::string key = "";
+		std::string key_value = "";
+
+		while (keys >> key >> key_value) {
+			this->keybinds[key] = this->supportedKeys->at(key_value);
+		}
+	}
+
+	keys.close();
 }

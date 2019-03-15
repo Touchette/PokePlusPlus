@@ -155,6 +155,7 @@
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameState.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="MainMenuState.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Intro.cpp" />
     <ClCompile Include="State.cpp" />
@@ -168,6 +169,7 @@
     <ClInclude Include="GameState.h" />
     <ClInclude Include="Intro.h" />
     <ClInclude Include="Keys.h" />
+    <ClInclude Include="MainMenuState.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="State.h" />
   </ItemGroup>

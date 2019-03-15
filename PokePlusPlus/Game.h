@@ -3,7 +3,7 @@
 #ifndef GAME_H
 #define GAME_H
 
-#include "GameState.h"
+#include "MainMenuState.h"
 
 class Game {
 
@@ -39,7 +39,7 @@ class Game {
 	sf::Clock dtClock;
 	float dt; // deltaTime
 
-	std::stack<GameState *> states;
+	std::stack<State *> states;
 	std::map<std::string, int> supportedKeys;
 };
 

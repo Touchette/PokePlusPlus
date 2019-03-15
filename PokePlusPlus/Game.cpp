@@ -66,15 +66,25 @@ void Game::initWindow() {
 }
 
 void Game::initKeys() {
-	this->supportedKeys.emplace("Escape", sf::Keyboard::Key::Escape);
-	this->supportedKeys.emplace("Up", sf::Keyboard::Key::Up);
-	this->supportedKeys.emplace("Down", sf::Keyboard::Key::Down);
-	this->supportedKeys.emplace("Left", sf::Keyboard::Key::Left);
-	this->supportedKeys.emplace("Right", sf::Keyboard::Key::Right);
+	std::ifstream keys("Settings/supported_keys.ini");
+
+	// Initialize the supported keys from a file instead of hard
+	// coding it, just reads them into a dictionary
+	if (keys.is_open()) {
+		std::string key = "";
+		int key_value = 0;
+
+		while (keys >> key >> key_value) {
+			this->supportedKeys[key] = key_value;
+		}
+	}
+
+	keys.close();
 }
 
 void Game::initStates() {
 	// Push the various states onto the state stack
+	this->states.push(new MainMenuState(this->window, &this->supportedKeys));
 	this->states.push(new GameState(this->window, &this->supportedKeys));
 }
 
