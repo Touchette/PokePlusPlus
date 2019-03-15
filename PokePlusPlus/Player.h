@@ -1,30 +1,25 @@
+#pragma once
+
 #ifndef PLAYER_H
 #define PLAYER_H
 
-#include <SFML\Graphics.hpp>
-#include "Animation.h"
+#include "Character.h"
 
-class Player {
+class Player : public Character {
   // +------------------+
   // | Public functions |
   // +------------------+
   public:
-	Player(sf::Texture *texture, sf::Vector2u imageCount, float switchTime, float speed);
+	// =========================+
+	// Constructor & Destructor |
+	// =========================+
+	Player(sf::Texture *texture, sf::Vector2u imageCount);
 	virtual ~Player();
 
-	void Update(float deltaTime);
-	void Draw(sf::RenderWindow &window);
-
-  // +-------------------+
-  // | Private variables |
-  // +-------------------+
-  private:
-	  unsigned int row, lastRow = 0;
-	  float speed = 0.0f;
-	  bool idle = true;
-	  sf::RectangleShape body;
-	  sf::Keyboard::Key lastKey;
-	  Animation animation;
+	// ======================+
+	// Drawing               |
+	// ======================+
+	void update();
 };
 
 #endif
