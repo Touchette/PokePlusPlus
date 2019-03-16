@@ -4,6 +4,7 @@
 #define MAINMENUSTATE_H
 
 #include "GameState.h"
+#include "Button.h"
 
 
 class MainMenuState : public State {
@@ -19,16 +20,29 @@ class MainMenuState : public State {
 	// +------------------------+
 	void update(const float &dt);
 	void render(sf::RenderTarget *target = nullptr);
+	void renderButtons(sf::RenderTarget *target = nullptr);
 
 	void endState();
 
 	void updateInput(const float &dt);
+	void updateButtons();
 
   private: // functions
+	// +--------------+
+	// | Initializers |
+	// +--------------+
 	void initKeybinds();
+	void initFonts();
+	void initButtons();
 
   private: // variables
 	sf::RectangleShape background;
+	sf::Font font;
+
+	std::map<std::string, Button*> buttons;
+	Button *gamestateButton;
+
+	std::string currentSelection;
 };
 
 #endif

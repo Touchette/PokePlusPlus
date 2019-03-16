@@ -19,15 +19,19 @@ GameState::~GameState() {
 // | Pure Virtual Functions |
 // +------------------------+
 void GameState::update(const float &dt) {
+	// We always pass deltaTime into these functions to keep
+	// the framerate and tickrate consistent across all computers
 	this->updateInput(dt);
 
 	this->player.update(dt);
 }
 
 void GameState::render(sf::RenderTarget *target) {
+	// Make sure that the primary rendering target is the main window
 	if (!target) {
 		target = this->window;
 	}
+
 	this->player.render(this->window);
 }
 
@@ -38,7 +42,8 @@ void GameState::endState() {
 void GameState::updateInput(const float &dt) {
 	this->checkForQuit();
 
-	// Update the player input
+	// Update the player input for movement, this works based on the keybindings
+	// we set up in the initKeybinds function which reads from a file
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("MOVE_UP")))) {
 		this->player.move(dt, 0.0f, -1.0f);
 	}
