@@ -28,6 +28,7 @@ class Game {
 	// +--------------------------+
 	// | Initialization Functions |
 	// +--------------------------+
+	void initVariables();
 	void initWindow();
 	void initKeys();
 	void initStates();

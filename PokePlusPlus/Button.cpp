@@ -27,8 +27,8 @@ Button::Button(float x, float y, float width, float height, std::string text, sf
 	);
 
 	// Set up the cursor
-	this->cursor.setPosition(this->text.getPosition().x, this->text.getPosition().y - 10);
-	this->cursor.setSize(sf::Vector2f());
+	this->cursor.setPosition(this->text.getPosition().x - 10, this->text.getPosition().y);
+	this->cursor.setSize(sf::Vector2f(6.0f, 7.0f));
 	this->cursor.setTexture(&cursorTexture);
 
 	// Color initialization

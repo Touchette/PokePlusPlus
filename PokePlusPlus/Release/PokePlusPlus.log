@@ -1,5 +1,22 @@
-﻿  main.cpp
+﻿  Button.cpp
+  Entity.cpp
+  Game.cpp
+  GameState.cpp
+  main.cpp
+  MainMenuState.cpp
+c:\users\natalie\source\repos\pokeplusplus\pokeplusplus\mainmenustate.cpp(18): warning C4244: 'argument': conversion from 'T' to 'T', possible loss of data
+          with
+          [
+              T=unsigned int
+          ]
+          and
+          [
+              T=float
+          ]
+  State.cpp
   Generating code
-  All 83 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
+  621 of 623 functions (99.7%) were compiled, the rest were copied from previous compilation.
+    553 functions were new in current compilation
+    0 functions had inline decision re-evaluated but remain unchanged
   Finished generating code
   PokePlusPlus.vcxproj -> C:\Users\Natalie\source\repos\PokePlusPlus\Release\PokePlusPlus.exe

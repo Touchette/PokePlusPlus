@@ -10,7 +10,7 @@ class State {
 	// +--------------------------+
 	// | Constructor / Destructor |
 	// +--------------------------+
-	State(sf::RenderWindow *window, std::map<std::string, int> *supportedKeys);
+	State(sf::RenderWindow *window, std::map<std::string, int> *supportedKeys, std::stack<State *> *states);
 	virtual ~State();
 
 	// +------------------------+
@@ -33,6 +33,9 @@ class State {
 	sf::RenderWindow *window;
 	std::map<std::string, int> *supportedKeys;
 	std::map<std::string, int> keybinds;
+
+	// The universal stack pointer from Game
+	std::stack<State *> *states;
 
 	// Resources
 	std::vector<sf::Texture *> textures;

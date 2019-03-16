@@ -2,10 +2,9 @@
 
 
 // +--------------------------+
-// | Constructor / Destructor |
-// +--------------------------+
-MainMenuState::MainMenuState(sf::RenderWindow *window, std::map<std::string, int> *supportedKeys)
-	: State(window, supportedKeys) {
+// | Constructor / Destructor |-
+MainMenuState::MainMenuState(sf::RenderWindow *window, std::map<std::string, int> *supportedKeys, std::stack<State *> *states)
+	: State(window, supportedKeys, states) {
 	sf::Texture mainMenuBackground;
 	mainMenuBackground.loadFromFile("Sprites/main-menu.png");
 
@@ -39,7 +38,6 @@ void MainMenuState::update(const float &dt) {
 	// the framerate and tickrate consistent across all computers
 	this->updateInput(dt);
 	this->updateButtons();
-	std::cout << this->currentSelection << std::endl;
 }
 
 void MainMenuState::render(sf::RenderTarget *target) {
@@ -74,6 +72,9 @@ void MainMenuState::updateInput(const float &dt) {
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("ENTER")))) {
 		if (currentSelection == "GAMESTATE") {
+			this->states->push(new GameState(this->window, this->supportedKeys, this->states));
+		}
+		if (currentSelection == "OPTIONS") {
 			this->quit = true;
 		}
 	}
@@ -90,11 +91,15 @@ void MainMenuState::updateButtons() {
 }
 
 
+void MainMenuState::initVariables()
+{
+}
+
 // +--------------+
 // | Initializers |
 // +--------------+
 void MainMenuState::initKeybinds() {
-	std::ifstream keys("Settings/gamestate_keybinds.ini");
+	std::ifstream keys("Settings/mainmenu_keybinds.ini");
 
 	// Initialize the keybindings from a file instead of hard
 	// coding it, just reads them into a dictionary
@@ -108,6 +113,10 @@ void MainMenuState::initKeybinds() {
 	}
 
 	keys.close();
+}
+
+void MainMenuState::initBackground()
+{
 }
 
 void MainMenuState::initFonts() {

@@ -12,7 +12,7 @@ class MainMenuState : public State {
 	// +--------------------------+
 	// | Constructor / Destructor |
 	// +--------------------------+
-	MainMenuState(sf::RenderWindow *window, std::map<std::string, int> *supportedKeys);
+	MainMenuState(sf::RenderWindow *window, std::map<std::string, int> *supportedKeys, std::stack<State *> *states);
 	virtual ~MainMenuState();
 
 	// +------------------------+
@@ -31,7 +31,9 @@ class MainMenuState : public State {
 	// +--------------+
 	// | Initializers |
 	// +--------------+
+	void initVariables();
 	void initKeybinds();
+	void initBackground();
 	void initFonts();
 	void initButtons();
 
@@ -39,7 +41,7 @@ class MainMenuState : public State {
 	sf::RectangleShape background;
 	sf::Font font;
 
-	std::map<std::string, Button*> buttons;
+	std::map<std::string, Button *> buttons;
 	Button *gamestateButton;
 
 	std::string currentSelection;

@@ -5,6 +5,7 @@
 // | Constructor / Destructor |
 // +--------------------------+
 Game::Game() {
+	this->initVariables();
 	this->initWindow();
 	this->initKeys();
 	this->initStates();
@@ -30,10 +31,15 @@ Game::~Game() {
 // +--------------------------+
 // | Initialization Functions |
 // +--------------------------+
+void Game::initVariables() {
+	this->window = nullptr;
+	this->dt = 0.0f;
+}
+
 void Game::initWindow() {
 	std::string title = "NULL";
 	sf::VideoMode window_bounds(160, 144);
-	unsigned framerate_limit = 120;
+	unsigned framerate_limit = 30;
 	bool vsync_enabled = 0;
 	sf::Image icon;
 
@@ -85,8 +91,7 @@ void Game::initKeys() {
 
 void Game::initStates() {
 	// Push the various states onto the state stack.
-	this->states.push(new MainMenuState(this->window, &this->supportedKeys));
-	//this->states.push(new GameState(this->window, &this->supportedKeys));
+	this->states.push(new MainMenuState(this->window, &this->supportedKeys, &this->states));
 }
 
 
