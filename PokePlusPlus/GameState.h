@@ -5,7 +5,6 @@
 
 #include "State.h"
 
-
 class GameState : public State {
   public: // functions
 	// +--------------------------+
@@ -23,10 +22,15 @@ class GameState : public State {
 	void updateInput(const float &dt);
 
   private: // functions
+	// +--------------+
+	// | Initializers |
+	// +--------------+
 	void initKeybinds();
+	void initTextures();
+	void initPlayer();
 
   private: // variables
-	Entity player;
+	Player *player;
 };
 
 #endif

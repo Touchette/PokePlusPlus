@@ -3,19 +3,7 @@
 #ifndef ENTITY_H
 #define ENTITY_H
 
-#include <map>
-#include <ctime>
-#include <stack>
-#include <vector>
-#include <sstream>
-#include <fstream>
-#include <cstdlib>
-#include <iostream>
-
-#include <SFML/Audio.hpp>
-#include <SFML/System.hpp>
-#include <SFML/Window.hpp>
-#include <SFML/Graphics.hpp>
+#include "MovementComponent.h"
 
 class Entity {
   public: // functions
@@ -28,11 +16,12 @@ class Entity {
 	// +---------------------+
 	// | Component Functions |
 	// +---------------------+
-	void createSpite(sf::Texture *texture);
+	void createSprite(sf::Texture *texture);
 
 	// +-----------+
 	// | Functions |
 	// +-----------+
+	virtual void setPosition(const float x, const float y);
 	virtual void move(const float &dt, const float dir_x, const float dir_y);
 	 
 	virtual void update(const float &dt);

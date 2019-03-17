@@ -10,7 +10,7 @@ class Player : public Entity {
 	// +--------------------------+
 	// | Constructor / Destructor |
 	// +--------------------------+
-	Player();
+	Player(float x, float y, sf::Texture *texture);
 	virtual ~Player();
 
 	// +-----------+

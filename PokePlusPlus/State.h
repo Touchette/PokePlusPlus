@@ -3,7 +3,7 @@
 #ifndef STATE_H
 #define STATE_H
 
-#include "Entity.h"
+#include "Player.h"
 
 class State {
   public: // functions
@@ -38,7 +38,7 @@ class State {
 	std::stack<State *> *states;
 
 	// Resources
-	std::vector<sf::Texture *> textures;
+	std::map<std::string, sf::Texture> textures;
 
   private: // variables
 	//
