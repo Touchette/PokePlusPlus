@@ -2,3 +2,4 @@
 * text=auto
 
 *.html linguist-vendored
+*.css linguist-vendored
