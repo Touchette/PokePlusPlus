@@ -21,6 +21,11 @@ class GameState : public State {
 
 	void updateInput(const float &dt);
 
+	// +-----------+
+	// | Functions |
+	// +-----------+
+	bool checkCollision(sf::Vector2f source, sf::Vector2f destination);
+
   private: // functions
 	// +--------------+
 	// | Initializers |
@@ -30,10 +35,12 @@ class GameState : public State {
 	void initTextures();
 	void initPlayer();
 	void initBackground();
+	void initCollisionMap();
 
   private: // variables
-	sf::RectangleShape background;
 	sf::Texture backgroundTexture;
+	sf::Sprite background;
+	std::vector<std::vector<unsigned short>> collisionData;
 
 	Player *player;
 

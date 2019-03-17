@@ -8,6 +8,7 @@ Entity::Entity() {
 }
 
 Entity::~Entity() {
+	//
 }
 
 
@@ -29,16 +30,10 @@ void Entity::createMovementComponent(const float maxVelocity) {
 // +-----------+
 // | Functions |
 // +-----------+
-void Entity::setPosition(const float x, const float y) {
-	// This will probably be used to set the starting position
-	// of the sprite upon loading every new map / zoning into a new
-	// location.
-	this->sprite.setPosition(x, y);
-}
-
 void Entity::move(MoveDir dir) {
 	// Every entity can move, we need to set up the velocity and then moves
 	// the sprite
+	this->lastPosition = this->getPosition();
 	this->direction = dir;
 
 	float moveStep = 1.5;
@@ -95,6 +90,25 @@ void Entity::render(sf::RenderTarget *target) {
 	target->draw(this->sprite);
 }
 
+void Entity::stopMove() {
+	this->sprite.setPosition(this->lastPosition);
+}
+
+
+// +-------------------+
+// | Getters & Setters |
+// +-------------------+
+void Entity::setPosition(const float x, const float y) {
+	// This will probably be used to set the starting position
+	// of the sprite upon loading every new map / zoning into a new
+	// location.
+	this->sprite.setPosition(x, y);
+}
+
+sf::Vector2f Entity::getPosition() {
+	return this->sprite.getPosition();
+}
+
 
 // +--------------+
 // | Initializers |
@@ -105,6 +119,7 @@ void Entity::initVariables() {
 	this->moveState = 0;
 	this->movementCounter = 0.0f;
 	this->counter = 0.0f;
+	this->lastPosition = this->getPosition();
 
 	this->turning = false;
 	this->moving = false;

@@ -68,6 +68,9 @@ void Game::initWindow() {
 		this->window->setIcon(12, 12, iconPixels);
 	}
 
+	this->view = new sf::View(sf::FloatRect(-0.0f, -0.0f, 320.0f, 288.0f));
+	window->setView(*view);
+
 	settings.close();
 }
 

@@ -35,6 +35,7 @@ class Game {
 	
   private: // variables
 	sf::RenderWindow *window;
+	sf::View *view;
 	sf::Event sfEvent;
 
 	sf::Clock dtClock;

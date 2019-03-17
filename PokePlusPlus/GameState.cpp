@@ -9,6 +9,7 @@ GameState::GameState(sf::RenderWindow *window, std::map<std::string, int> *suppo
 	this->initVariables();
 	this->initKeybinds();
 	this->initTextures();
+	this->initCollisionMap();
 	this->initBackground();
 	this->initPlayer();
 
@@ -30,6 +31,15 @@ void GameState::update(const float &dt) {
 	// We always pass deltaTime into these functions to keep
 	// the framerate and tickrate consistent across all computers
 	this->updateInput(dt);
+
+	// Collision detection
+	sf::Vector2f position = this->player->getPosition();
+	sf::Vector2f position2 = position + sf::Vector2f(1.0f, 1.0f);
+ 	if (this->checkCollision(position, position2)) {
+		std::cerr << "Collision detected! At: " << position.x << "x" << position.y
+			<< ", " << position2.x << "x" << position2.y << std::endl;
+		this->player->stopMove();
+	}
 
 	this->player->update(dt);
 }
@@ -95,24 +105,65 @@ void GameState::initTextures() {
 		std::cerr << "Could not load player texture!" << std::endl;
 		exit(EXIT_FAILURE);
 	}
-}
-
-void GameState::initPlayer() {
-	this->player = new Player(8, 8, this->textures["PLAYER_IDLE"]);
-}
-
-void GameState::initBackground() {
-	this->background.setSize(
-		sf::Vector2f(
-			static_cast<float>(this->window->getSize().x),
-			static_cast<float>(this->window->getSize().y)
-		)
-	);
-
-	if (!this->backgroundTexture.loadFromFile("Sprites/pallet-town.png")) {
+	if (!this->textures["PALLET_TOWN"].loadFromFile("Sprites/pallet-town.png")) {
 		std::cerr << "Failed to load Game State background texture!" << std::endl;
 		exit(EXIT_FAILURE);
 	}
+}
 
-	this->background.setTexture(&this->backgroundTexture);
+void GameState::initPlayer() {
+	this->player = new Player(32, 32, this->textures["PLAYER_IDLE"]);
+}
+
+void GameState::initBackground() {
+	this->background.setTexture(this->textures["PALLET_TOWN"]);
+}
+
+void GameState::initCollisionMap() {
+	sf::Image collisionMap;
+	unsigned int height, width;
+
+	if (!collisionMap.loadFromFile("Sprites/pallet-town-collisions.png")) {
+		std::cerr << "Failed to load Game State collision map!" << std::endl;
+	}
+
+	std::ofstream log;
+	log.open("log.txt");
+
+	sf::Vector2u size = collisionMap.getSize();
+	for (height = 0; height < size.y; height+=16) {
+		std::vector<unsigned short> row;
+		for (width = 0; width < size.x; width+=16) {
+			sf::Color currentPixel = collisionMap.getPixel(width, height);
+			if (currentPixel.toInteger() == 255) {
+				row.push_back(1);
+			} else {
+				row.push_back(0);
+			}
+		}
+		this->collisionData.push_back(row);
+		if (log.is_open()) {
+			log << "<";
+			for (auto it : row) {
+				log << it;
+			}
+			log << ">" << std::endl;
+		}
+	}
+
+	log.close();
+}
+
+void printCollisionMap() {
+	
+}
+
+bool GameState::checkCollision(sf::Vector2f source, sf::Vector2f destination) {
+	unsigned int source_x = static_cast<unsigned int>(source.x / 16);
+	unsigned int source_y = static_cast<unsigned int>(source.y / 16);
+
+	unsigned int dest_x = static_cast<unsigned int>(destination.x / 16);
+	unsigned int dest_y = static_cast<unsigned int>(destination.y / 16);
+
+	return ((this->collisionData[source_y][source_x] == 1) or (this->collisionData[dest_y][dest_x] == 1));
 }

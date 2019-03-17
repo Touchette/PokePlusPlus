@@ -30,12 +30,18 @@ class Entity {
 	// +-----------+
 	// | Functions |
 	// +-----------+
-	virtual void setPosition(const float x, const float y);
 	virtual void move(MoveDir dir);
 	virtual void startMovement(MoveDir dir);
+	virtual void stopMove();
 	 
 	virtual void update(const float &dt);
 	virtual void render(sf::RenderTarget *target);
+
+	// +-------------------+
+	// | Getters & Setters |
+	// +-------------------+
+	virtual void setPosition(const float x, const float y);
+	sf::Vector2f getPosition();
 
   private: // functions
 	// +--------------+
@@ -52,6 +58,7 @@ class Entity {
 
 	bool turning;
 	bool moving;
+	sf::Vector2f lastPosition;
 
 	sf::Sprite sprite;
 };
