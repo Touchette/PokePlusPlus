@@ -28,6 +28,11 @@ class Button {
 	void render(sf::RenderTarget *target);
 	void update(bool highlighted);
 
+	// +--------------+
+	// | Initializers |
+	// +--------------+
+	void initCursor();
+
 	// +-------------------+
 	// | Getters & Setters |
 	// +-------------------+
@@ -39,9 +44,11 @@ class Button {
 	bool selected;
 
 	sf::RectangleShape shape;
-	sf::RectangleShape cursor;
 	sf::Font *font;
 	sf::Text text;
+
+	sf::RectangleShape cursor;
+	sf::Texture cursorTexture;
 
 	sf::Color idleColor;
 	sf::Color hoverColor;

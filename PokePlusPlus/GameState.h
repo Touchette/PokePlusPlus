@@ -19,8 +19,6 @@ class GameState : public State {
 	// +------------------------+
 	void update(const float &dt);
 	void render(sf::RenderTarget *target = nullptr);
-	
-	void endState();
 
 	void updateInput(const float &dt);
 

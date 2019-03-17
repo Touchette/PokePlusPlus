@@ -1,14 +1,2 @@
-﻿  Game.cpp
-  MainMenuState.cpp
-c:\users\natalie\source\repos\pokeplusplus\pokeplusplus\mainmenustate.cpp(17): warning C4244: 'argument': conversion from 'T' to 'T', possible loss of data
-          with
-          [
-              T=unsigned int
-          ]
-          and
-          [
-              T=float
-          ]
-  main.cpp
-  Generating Code...
+﻿  Player.cpp
   PokePlusPlus.vcxproj -> C:\Users\Natalie\source\repos\PokePlusPlus\Debug\PokePlusPlus.exe

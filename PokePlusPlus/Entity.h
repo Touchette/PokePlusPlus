@@ -25,6 +25,11 @@ class Entity {
 	Entity();
 	virtual ~Entity();
 
+	// +---------------------+
+	// | Component Functions |
+	// +---------------------+
+	void createSpite(sf::Texture *texture);
+
 	// +-----------+
 	// | Functions |
 	// +-----------+
@@ -33,11 +38,16 @@ class Entity {
 	virtual void update(const float &dt);
 	virtual void render(sf::RenderTarget *target);
 
-  private: // variables
-	//
+  private: // functions
+	// +--------------+
+	// | Initializers |
+	// +--------------+
+	void initVariables();
 
   protected: // variables
-	sf::RectangleShape shape;
+	sf::Texture *texture;
+	sf::Sprite* sprite;
+
 	float movementSpeed;
 };
 

@@ -20,8 +20,8 @@ class State {
 	virtual void render(sf::RenderTarget *target = nullptr) = 0;
 
 	const bool & getQuit() const;
-	virtual void checkForQuit();
-	virtual void endState() = 0;
+	//-virtual void updateEndState() = 0;
+	virtual void endState();
 
 	virtual void updateInput(const float &dt) = 0;
 

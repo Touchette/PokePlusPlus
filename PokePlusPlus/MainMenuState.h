@@ -22,8 +22,6 @@ class MainMenuState : public State {
 	void render(sf::RenderTarget *target = nullptr);
 	void renderButtons(sf::RenderTarget *target = nullptr);
 
-	void endState();
-
 	void updateInput(const float &dt);
 	void updateButtons();
 
@@ -39,8 +37,9 @@ class MainMenuState : public State {
 
   private: // variables
 	sf::RectangleShape background;
-	sf::Font font;
+	sf::Texture backgroundTexture;
 
+	sf::Font font;
 	std::map<std::string, Button *> buttons;
 	Button *gamestateButton;
 

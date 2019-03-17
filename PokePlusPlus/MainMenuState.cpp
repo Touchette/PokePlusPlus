@@ -5,17 +5,11 @@
 // | Constructor / Destructor |-
 MainMenuState::MainMenuState(sf::RenderWindow *window, std::map<std::string, int> *supportedKeys, std::stack<State *> *states)
 	: State(window, supportedKeys, states) {
-	sf::Texture mainMenuBackground;
-	mainMenuBackground.loadFromFile("Sprites/main-menu.png");
-
+	this->initVariables();
+	this->initBackground();
 	this->initKeybinds();
 	this->initFonts();
 	this->initButtons();
-
-	// Creating a blank background for the main menu... for now, this will eventually be the
-	// menu that displays after a title card asking for a new game / load / etc
-	this->background.setSize(sf::Vector2f(window->getSize().x, window->getSize().y));
-	this->background.setTexture(&mainMenuBackground);
 
 	this->currentSelection = "GAMESTATE";
 }
@@ -56,13 +50,7 @@ void MainMenuState::renderButtons(sf::RenderTarget *target) {
 	}
 }
 
-void MainMenuState::endState() {
-	std::cout << "Ending Main Menu state\n";
-}
-
 void MainMenuState::updateInput(const float &dt) {
-	this->checkForQuit();
-
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("MOVE_DOWN"))) && currentSelection == "GAMESTATE") {
 		this->currentSelection = "OPTIONS";
 	}
@@ -75,7 +63,7 @@ void MainMenuState::updateInput(const float &dt) {
 			this->states->push(new GameState(this->window, this->supportedKeys, this->states));
 		}
 		if (currentSelection == "OPTIONS") {
-			this->quit = true;
+			this->endState();
 		}
 	}
 }
@@ -91,13 +79,13 @@ void MainMenuState::updateButtons() {
 }
 
 
-void MainMenuState::initVariables()
-{
-}
-
 // +--------------+
 // | Initializers |
 // +--------------+
+void MainMenuState::initVariables() {
+	//
+}
+
 void MainMenuState::initKeybinds() {
 	std::ifstream keys("Settings/mainmenu_keybinds.ini");
 
@@ -115,8 +103,20 @@ void MainMenuState::initKeybinds() {
 	keys.close();
 }
 
-void MainMenuState::initBackground()
-{
+void MainMenuState::initBackground() {
+	this->background.setSize(
+		sf::Vector2f(
+			static_cast<float>(this->window->getSize().x),
+			static_cast<float>(this->window->getSize().y)
+		)
+	);
+
+	if (!this->backgroundTexture.loadFromFile("Sprites/main-menu.png")) {
+		std::cerr << "Failed to load Main Menu background texture!" << std::endl;
+		exit(EXIT_FAILURE);
+	}
+
+	this->background.setTexture(&this->backgroundTexture);
 }
 
 void MainMenuState::initFonts() {
@@ -130,13 +130,13 @@ void MainMenuState::initFonts() {
 
 void MainMenuState::initButtons() {
 	this->buttons["GAMESTATE"] = new Button(
-		7, 15, 100, 20,
+		4, 10, 100, 20,
 		"NEW   GAME", &this->font,
-		sf::Color::White, sf::Color::Red, sf::Color::White);
+		sf::Color(0, 0, 0, 0), sf::Color(0, 0, 0, 0), sf::Color(0, 0, 0, 0));
 
 	this->buttons["OPTIONS"] = new Button(
-		3, 35, 100, 20,
-		"OPTIONS", &this->font,
-		sf::Color::White, sf::Color::Red, sf::Color::White);
+		-4, 25, 100, 20,
+		"OPTION", &this->font,
+		sf::Color(0, 0, 0, 0), sf::Color(0, 0, 0, 0), sf::Color(0, 0, 0, 0));
 }
 
