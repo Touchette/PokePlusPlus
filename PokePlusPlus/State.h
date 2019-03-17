@@ -31,6 +31,7 @@ class State {
   protected: // variables
 	bool quit;
 	sf::RenderWindow *window;
+	sf::View *windowView;
 	std::map<std::string, int> *supportedKeys;
 	std::map<std::string, int> keybinds;
 

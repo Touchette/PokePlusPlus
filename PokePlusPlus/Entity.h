@@ -5,6 +5,14 @@
 
 #include "MovementComponent.h"
 
+enum MoveDir {
+	NONE = 0,
+	UP,
+	DOWN,
+	LEFT,
+	RIGHT
+};
+
 class Entity {
   public: // functions
 	// +--------------------------+
@@ -16,13 +24,15 @@ class Entity {
 	// +---------------------+
 	// | Component Functions |
 	// +---------------------+
-	void createSprite(sf::Texture *texture);
+	void setTexture(sf::Texture &texture);
+	void createMovementComponent(const float maxVelocity);
 
 	// +-----------+
 	// | Functions |
 	// +-----------+
 	virtual void setPosition(const float x, const float y);
-	virtual void move(const float &dt, const float dir_x, const float dir_y);
+	virtual void move(MoveDir dir);
+	virtual void startMovement(MoveDir dir);
 	 
 	virtual void update(const float &dt);
 	virtual void render(sf::RenderTarget *target);
@@ -34,10 +44,16 @@ class Entity {
 	void initVariables();
 
   protected: // variables
-	sf::Texture *texture;
-	sf::Sprite* sprite;
+	MoveDir direction;
+	
+	int moveState;
+	float movementCounter;
+	float counter;
 
-	float movementSpeed;
+	bool turning;
+	bool moving;
+
+	sf::Sprite sprite;
 };
 
 #endif

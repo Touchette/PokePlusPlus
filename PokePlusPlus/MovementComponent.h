@@ -22,11 +22,33 @@ class MovementComponent {
 	// +--------------------------+
 	// | Constructor / Destructor |
 	// +--------------------------+
-	MovementComponent();
+	MovementComponent(sf::Sprite &sprite, float maxVelocity);
 	virtual ~MovementComponent();
 
-  private: // functions
-	  //
+	// +-----------+
+	// | Functions |
+	// +-----------+
+	void move(const float dir_x, const float dir_y, const float &dt);
+	void update(const float &dt);
+
+	// +-------------------+
+	// | Getters & Setters |
+	// +-------------------+
+	const sf::Vector2f &getVelocity() const;
+
+  private:
+	// +--------------+
+	// | Initializers |
+	// +--------------+
+	void initVariables();
+
+  private: // variables
+	  sf::Sprite &sprite;
+
+	  float maxVelocity;
+	  sf::Vector2f velocity;
+	  sf::Vector2f acceleration;
+	  sf::Vector2f deceleration;
 };
 
 #endif

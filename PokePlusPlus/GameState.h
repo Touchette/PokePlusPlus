@@ -25,12 +25,19 @@ class GameState : public State {
 	// +--------------+
 	// | Initializers |
 	// +--------------+
+	void initVariables();
 	void initKeybinds();
 	void initTextures();
 	void initPlayer();
+	void initBackground();
 
   private: // variables
+	sf::RectangleShape background;
+	sf::Texture backgroundTexture;
+
 	Player *player;
+
+	sf::View *windowView;
 };
 
 #endif

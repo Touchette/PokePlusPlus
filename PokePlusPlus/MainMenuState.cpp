@@ -14,7 +14,6 @@ MainMenuState::MainMenuState(sf::RenderWindow *window, std::map<std::string, int
 	this->currentSelection = "GAMESTATE";
 }
 
-
 MainMenuState::~MainMenuState() {
 	// Clean up the buttons
 	auto it = this->buttons.begin();
@@ -130,12 +129,12 @@ void MainMenuState::initFonts() {
 
 void MainMenuState::initButtons() {
 	this->buttons["GAMESTATE"] = new Button(
-		4, 10, 100, 20,
+		27, 30, 100, 20,
 		"NEW   GAME", &this->font,
 		sf::Color(0, 0, 0, 0), sf::Color(0, 0, 0, 0), sf::Color(0, 0, 0, 0));
 
 	this->buttons["OPTIONS"] = new Button(
-		-4, 25, 100, 20,
+		17, 55, 100, 20,
 		"OPTION", &this->font,
 		sf::Color(0, 0, 0, 0), sf::Color(0, 0, 0, 0), sf::Color(0, 0, 0, 0));
 }

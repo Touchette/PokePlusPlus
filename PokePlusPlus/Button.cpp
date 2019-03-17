@@ -15,7 +15,7 @@ Button::Button(float x, float y, float width, float height, std::string text, sf
 	this->text.setFont(*this->font);
 	this->text.setString(text);
 	this->text.setFillColor(sf::Color::Black);
-	this->text.setCharacterSize(6);
+	this->text.setCharacterSize(12);
 
 	// Text position offset
 	this->text.setPosition(
