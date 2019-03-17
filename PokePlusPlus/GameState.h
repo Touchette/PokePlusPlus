@@ -10,7 +10,7 @@ class GameState : public State {
 	// +--------------------------+
 	// | Constructor / Destructor |
 	// +--------------------------+
-	GameState(sf::RenderWindow *window, std::map<std::string, int> *supportedKeys, std::stack<State *> *states);
+	GameState(sf::RenderWindow *window, sf::View *view, std::map<std::string, int> *supportedKeys, std::stack<State *> *states);
 	virtual ~GameState();
 
 	// +------------------------+
@@ -38,8 +38,8 @@ class GameState : public State {
 	void initCollisionMap();
 
   private: // variables
-	sf::Texture backgroundTexture;
 	sf::Sprite background;
+	sf::Sprite foreground;
 	std::vector<std::vector<unsigned short>> collisionData;
 
 	Player *player;

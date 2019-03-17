@@ -20,10 +20,7 @@ void Entity::setTexture(sf::Texture &texture) {
 	// For now, it is only a static sprite. In the future, it will need to be
 	// animated.
 	this->sprite.setTexture(texture);
-}
-
-void Entity::createMovementComponent(const float maxVelocity) {
-	//this->movementComponent = new MovementComponent(this->sprite, maxVelocity);
+	this->sprite.setTextureRect(sf::IntRect(16, 0, 16, 14));
 }
 
 
@@ -33,6 +30,8 @@ void Entity::createMovementComponent(const float maxVelocity) {
 void Entity::move(MoveDir dir) {
 	// Every entity can move, we need to set up the velocity and then moves
 	// the sprite
+	this->sprite.setTextureRect(sf::IntRect((1 - this->counter) * 16, this->getDirection(dir) * 14, 16, 14));
+
 	this->lastPosition = this->getPosition();
 	this->direction = dir;
 
@@ -55,9 +54,11 @@ void Entity::move(MoveDir dir) {
 		}
 	}
 
-	this->movementCounter += 16 / 8;
+	this->movementCounter += 2;
 	if (movementCounter >= 16) {
 		this->counter = 0;
+
+		this->sprite.setTextureRect(sf::IntRect((1 - this->counter) * 16, this->getDirection(dir) * 14, 16, 14));
 
 		moving = false;
 	}
@@ -69,7 +70,7 @@ void Entity::startMovement(MoveDir dir) {
 		this->counter = 0;
 	} else {
 		this->turning = false;
-		counter = this->moveState;
+		this->counter = this->moveState;
 	}
 	this->turning = (dir != this->direction);
 
@@ -107,6 +108,23 @@ void Entity::setPosition(const float x, const float y) {
 
 sf::Vector2f Entity::getPosition() {
 	return this->sprite.getPosition();
+}
+
+int Entity::getDirection(MoveDir dir) {
+	switch (dir) {
+		case DOWN:
+			return 0;
+			break;
+		case UP:
+			return 1;
+			break;
+		case RIGHT:
+			return 2;
+			break;
+		case LEFT:
+			return 3;
+			break;
+	}
 }
 
 

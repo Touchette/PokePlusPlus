@@ -3,8 +3,8 @@
 
 // +--------------------------+
 // | Constructor / Destructor |-
-MainMenuState::MainMenuState(sf::RenderWindow *window, std::map<std::string, int> *supportedKeys, std::stack<State *> *states)
-	: State(window, supportedKeys, states) {
+MainMenuState::MainMenuState(sf::RenderWindow *window, sf::View *view, std::map<std::string, int> *supportedKeys, std::stack<State *> *states)
+	: State(window, view, supportedKeys, states) {
 	this->initVariables();
 	this->initBackground();
 	this->initKeybinds();
@@ -59,7 +59,7 @@ void MainMenuState::updateInput(const float &dt) {
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("ENTER")))) {
 		if (currentSelection == "GAMESTATE") {
-			this->states->push(new GameState(this->window, this->supportedKeys, this->states));
+			this->states->push(new GameState(this->window, this->windowView, this->supportedKeys, this->states));
 		}
 		if (currentSelection == "OPTIONS") {
 			this->endState();

@@ -25,7 +25,6 @@ class Entity {
 	// | Component Functions |
 	// +---------------------+
 	void setTexture(sf::Texture &texture);
-	void createMovementComponent(const float maxVelocity);
 
 	// +-----------+
 	// | Functions |
@@ -42,6 +41,7 @@ class Entity {
 	// +-------------------+
 	virtual void setPosition(const float x, const float y);
 	sf::Vector2f getPosition();
+	int getDirection(MoveDir dir);
 
   private: // functions
 	// +--------------+

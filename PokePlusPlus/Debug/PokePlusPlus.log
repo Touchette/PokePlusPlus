@@ -1,2 +1,6 @@
-﻿  GameState.cpp
+﻿  Game.cpp
+  GameState.cpp
+  MainMenuState.cpp
+  main.cpp
+  Generating Code...
   PokePlusPlus.vcxproj -> C:\Users\Natalie\source\repos\PokePlusPlus\Debug\PokePlusPlus.exe

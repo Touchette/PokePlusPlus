@@ -12,7 +12,7 @@ class MainMenuState : public State {
 	// +--------------------------+
 	// | Constructor / Destructor |
 	// +--------------------------+
-	MainMenuState(sf::RenderWindow *window, std::map<std::string, int> *supportedKeys, std::stack<State *> *states);
+	MainMenuState(sf::RenderWindow *window, sf::View *view, std::map<std::string, int> *supportedKeys, std::stack<State *> *states);
 	virtual ~MainMenuState();
 
 	// +------------------------+

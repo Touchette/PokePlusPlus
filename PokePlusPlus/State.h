@@ -10,7 +10,7 @@ class State {
 	// +--------------------------+
 	// | Constructor / Destructor |
 	// +--------------------------+
-	State(sf::RenderWindow *window, std::map<std::string, int> *supportedKeys, std::stack<State *> *states);
+	State(sf::RenderWindow *window, sf::View *view, std::map<std::string, int> *supportedKeys, std::stack<State *> *states);
 	virtual ~State();
 
 	// +------------------------+

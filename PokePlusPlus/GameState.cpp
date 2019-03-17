@@ -4,8 +4,8 @@
 // +--------------------------+
 // | Constructor / Destructor |
 // +--------------------------+
-GameState::GameState(sf::RenderWindow *window, std::map<std::string, int> *supportedKeys, std::stack<State *> *states)
-	: State(window, supportedKeys, states) {
+GameState::GameState(sf::RenderWindow *window, sf::View *view, std::map<std::string, int> *supportedKeys, std::stack<State *> *states)
+	: State(window, view, supportedKeys, states) {
 	this->initVariables();
 	this->initKeybinds();
 	this->initTextures();
@@ -13,8 +13,8 @@ GameState::GameState(sf::RenderWindow *window, std::map<std::string, int> *suppo
 	this->initBackground();
 	this->initPlayer();
 
-	sf::View view(sf::FloatRect(-0.0f, -0.0f, 160.0f, 144.0f));
-	this->window->setView(view);
+	view->setCenter(this->player->getPosition());
+	this->window->setView(*view);
 }
 
 GameState::~GameState() {
@@ -36,22 +36,25 @@ void GameState::update(const float &dt) {
 	sf::Vector2f position = this->player->getPosition();
 	sf::Vector2f position2 = position + sf::Vector2f(1.0f, 1.0f);
  	if (this->checkCollision(position, position2)) {
-		std::cerr << "Collision detected! At: " << position.x << "x" << position.y
-			<< ", " << position2.x << "x" << position2.y << std::endl;
 		this->player->stopMove();
 	}
 
 	this->player->update(dt);
+
+	sf::View *newView = new sf::View(sf::FloatRect(-0.0f, -0.0f, 160.0f, 144.0f));
+	newView->setCenter(this->player->getPosition());
+	this->window->setView(*newView);
 }
 
 void GameState::render(sf::RenderTarget *target) {
 	// Make sure that the primary rendering target is the main window
 	if (!target) {
-		target = this->window;
-	}
+		target = this->window;}
+
 
 	target->draw(this->background);
 	this->player->render(this->window);
+	target->draw(this->foreground);
 }
 
 void GameState::updateInput(const float &dt) {
@@ -101,7 +104,7 @@ void GameState::initKeybinds() {
 }
 
 void GameState::initTextures() {
-	if (!this->textures["PLAYER_IDLE"].loadFromFile("Sprites/clefairy-idle.png")) {
+	if (!this->textures["PLAYER_IDLE"].loadFromFile("Sprites/clefairy-walkcycles.png")) {
 		std::cerr << "Could not load player texture!" << std::endl;
 		exit(EXIT_FAILURE);
 	}
@@ -109,14 +112,19 @@ void GameState::initTextures() {
 		std::cerr << "Failed to load Game State background texture!" << std::endl;
 		exit(EXIT_FAILURE);
 	}
+	if (!this->textures["PALLET_TOWN_TOP"].loadFromFile("Sprites/pallet-town-top.png")) {
+		std::cerr << "Failed to load Game State background texture!" << std::endl;
+		exit(EXIT_FAILURE);
+	}
 }
 
 void GameState::initPlayer() {
-	this->player = new Player(32, 32, this->textures["PLAYER_IDLE"]);
+	this->player = new Player(128, 128, this->textures["PLAYER_IDLE"]);
 }
 
 void GameState::initBackground() {
 	this->background.setTexture(this->textures["PALLET_TOWN"]);
+	this->foreground.setTexture(this->textures["PALLET_TOWN_TOP"]);
 }
 
 void GameState::initCollisionMap() {

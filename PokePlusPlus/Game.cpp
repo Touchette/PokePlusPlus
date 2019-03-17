@@ -94,7 +94,7 @@ void Game::initKeys() {
 
 void Game::initStates() {
 	// Push the various states onto the state stack.
-	this->states.push(new MainMenuState(this->window, &this->supportedKeys, &this->states));
+	this->states.push(new MainMenuState(this->window, this->view, &this->supportedKeys, &this->states));
 }
 
 

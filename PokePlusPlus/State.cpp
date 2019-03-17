@@ -4,7 +4,7 @@
 // +--------------------------+
 // | Constructor / Destructor |
 // +--------------------------+
-State::State(sf::RenderWindow *window, std::map<std::string, int> *supportedKeys, std::stack<State *> *states) {
+State::State(sf::RenderWindow *window, sf::View *view, std::map<std::string, int> *supportedKeys, std::stack<State *> *states) {
 	// Set up the base state that will apply to all children. They all need the
 	// window to render to, as well as which keys are supported for their bindings.
 	this->window = window;
@@ -12,6 +12,7 @@ State::State(sf::RenderWindow *window, std::map<std::string, int> *supportedKeys
 	this->supportedKeys = supportedKeys;
 	this->states = states;
 	this->quit = false;
+	this->windowView = view;
 }
 
 
